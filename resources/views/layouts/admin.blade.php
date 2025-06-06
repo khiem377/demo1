@@ -15,6 +15,7 @@
             |<a href="{{ route('home') }}" class="btn btn-outline-light btn-sm me-2">Trang chủ</a>
             @csrf
             <button class="btn btn-outline-light btn-sm">Đăng xuất</button>
+             <button class="btn btn-outline-light btn-sm">Thông tin tài khoản</button>
         </form>
     </nav>
 
