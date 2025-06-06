@@ -1,18 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
+
 <head>
-    <meta charset=\"UTF-8\">
-    <title>Quản trị ứng tuyển</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #eee; }
-        a { color: blue; text-decoration: none; }
-    </style>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-    <h1>Quản lý Ứng tuyển</h1>
-    @yield('content')
+    <nav class="navbar navbar-dark bg-dark px-4">
+        <span class="navbar-brand mb-0 h1">Trang quản trị</span>
+
+        <form action="{{ route('logout') }}" method="POST">
+            |<a href="{{ route('home') }}" class="btn btn-outline-light btn-sm me-2">Trang chủ</a>
+            @csrf
+            <button class="btn btn-outline-light btn-sm">Đăng xuất</button>
+        </form>
+    </nav>
+
+
+
+
+    <div class="container mt-4">
+        <div class="mb-3">
+            <a href="{{ route('admin.jobs.index') }}" class="btn btn-primary me-2">Danh sách công việc</a>
+            <a href="{{ route('admin.applications.index') }}" class="btn btn-success me-2">Danh sách ứng tuyển</a>
+            <a href="{{ route('admin.banners.index') }}" class="btn btn-warning">Quản lý banner</a> {{-- ✅ Nút mới thêm --}}
+        </div>
+
+        <div class="card p-3">
+            @yield('content')
+        </div>
+    </div>
 </body>
+
 </html>

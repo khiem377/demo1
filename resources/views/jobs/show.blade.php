@@ -134,8 +134,15 @@
     </style>
 </head>
 
-<body>
+@extends('layouts.app')
 
+@section('title', 'Trang Chủ')
+
+
+@section('content')
+    <div class="banner">
+        <img src="{{ asset($banner) }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
+    </div>
     <div class="container">
         <div class="left">
 
@@ -146,11 +153,12 @@
                     <img src="{{ asset('images/qc.png') }}" alt="image" />
                 @endif
             </div>
-
-
+            <!-- chuyển md sang cv -->
             <div id="job-description" class="job-description">
-                {!! nl2br(e($job->description ?? 'Chưa có mô tả chi tiết cho vị trí này.')) !!}
+                {!! $job->description ?? '<p>Chưa có mô tả chi tiết cho vị trí này.</p>' !!}
             </div>
+
+
             @if(session('success'))
                 <div style="color: green; margin-bottom: 20px;">
                     {{ session('success') }}
@@ -177,13 +185,17 @@
 
                     <label>Kinh nghiệm làm việc</label><br>
                     <textarea name="experience" rows="4" placeholder="Nhập kinh nghiệm làm việc"></textarea><br><br>
-
                     <label>CV ứng tuyển</label><br>
-                    <input type="radio" name="has_cv" value="1" checked> Có CV
-                    <input type="radio" name="has_cv" value="0"> Không có CV<br><br>
+                    <input type="radio" name="has_cv" value="1" id="has_cv_yes"> Có CV
+                    <input type="radio" name="has_cv" value="0" id="has_cv_no" checked> Không có CV
+                    <!-- tích hợp clound libarylibary -->
+                    <div id="cv-upload-wrapper" style=" margin-top: 15px;">
+                        <input type="file" name="cv_file" accept=".pdf,.doc,.docx">
+                    </div>
 
-                    <input type="file" name="cv_file" accept=".pdf,.doc,.docx"><br>
-                    <small>Lưu ý: Sử dụng file PDF, doc, docx. Tối đa 3MB</small><br><br>
+
+                    <!-- <input type="file" name="cv_file" accept=".pdf,.doc,.docx"><br> -->
+                    <!-- <small>Lưu ý: Sử dụng file PDF, doc, docx. Tối đa 3MB</small><br><br> -->
 
                     <label>Nguyện vọng làm việc của bạn</label><br>
                     <input type="text" name="desired_salary" placeholder="Nhập thu nhập mong muốn"><br><br>
@@ -222,3 +234,4 @@
                 document.getElementById('apply-form').style.display = 'block';
             });
         </script>
+@endsection

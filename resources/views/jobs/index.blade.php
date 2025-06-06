@@ -31,33 +31,38 @@
         }
     </style>
 </head>
-<body>
+@extends('layouts.app')
 
-<h1 style="text-align:center;">Danh sách Vị trí ứng tuyển</h1>
+@section('title', 'Trang Chủ')
 
-<table>
-    <thead>
-        <tr>
-            <th>Tên công việc</th>
-            <th>Địa chỉ</th>
-            <th>Loại hình</th>
-            <th>Chi tiết</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($jobs as $job)
+@section('content')
+<div class="banner">
+    <img src="{{ asset($banner) }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
+</div>
+    <h1 style="text-align:center;">Danh sách Vị trí ứng tuyển</h1>
+
+    <table>
+        <thead>
             <tr>
-                <td>{{ $job->title }}</td>
-                <td>{{ $job->address }}</td>
-                <td>{{ ucfirst($job->type) }}</td>
-                <td><a class="button" href="{{ route('jobs.show', $job->id) }}">Chi tiết</a></td>
+                <th>Tên công việc</th>
+                <th>Địa chỉ</th>
+                <th>Loại hình</th>
+                <th>Chi tiết</th>
             </tr>
-        @endforeach
-    </tbody>
-    <div class="back">
-                <a href="{{ route('home') }}" class="back-link">&larr; Quay lại danh sách</a>
-            </div>
-</table>
+        </thead>
+        <tbody>
+            @foreach ($jobs as $job)
+                <tr>
+                    <td>{{ $job->title }}</td>
+                    <td>{{ $job->address }}</td>
+                    <td>{{ ucfirst($job->type) }}</td>
+                    <td><a class="button" href="{{ route('jobs.show', $job->id) }}">Chi tiết</a></td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-</body>
-</html>
+    <div class="back">
+        <a href="{{ route('home') }}" class="back-link">&larr; Quay lại danh sách</a>
+    </div>
+@endsection

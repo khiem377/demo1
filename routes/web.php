@@ -24,20 +24,93 @@ Route::post('/jobs/{id}/apply', [JobController::class, 'apply'])->name('jobs.app
 // Dashboard route, cần đăng nhập và xác minh email
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+})->middleware(['guest', 'verified'])->name('dashboard');
 // Profile routes (cần đăng nhập)
-Route::middleware('auth')->group(function () {
+Route::middleware('guest')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+//adminadmin
 use App\Http\Controllers\AdminController;
 
-Route::prefix('admin')->group(function () {
-    Route::get('/applications', [AdminController::class, 'index'])->name('admin.applications.index');
-    Route::get('/applications/{id}', [AdminController::class, 'show'])->name('admin.applications.show');
+
+Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () {
+    Route::get('/applications', [AdminController::class, 'index'])->name('applications.index');
+    Route::get('/applications/{id}', [AdminController::class, 'show'])->name('applications.show');
+
+    Route::resource('jobs', JobController::class);
 });
+
+
 
 // Load auth routes (login, register, password reset,...)
 require __DIR__.'/auth.php';
+
+use App\Http\Controllers\Admin\JobController as AdminJobController;
+
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::resource('jobs', AdminJobController::class);
+});
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('applications', App\Http\Controllers\Admin\ApplicationController::class);
+});
+//doashb
+
+
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/applications/{id}', [AdminController::class, 'show'])->name('applications.show');
+});
+
+
+use Illuminate\Support\Facades\Auth;
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/'); // ✅ Về trang chủ
+})->name('logout');
+
+
+//banner
+use App\Http\Controllers\BannerController;
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/banners', [BannerController::class, 'index'])->name('admin.banners.index');
+    Route::post('/banners', [BannerController::class, 'upload'])->name('admin.banners.upload');
+});
+Route::delete('/admin/banner/{id}', [App\Http\Controllers\Admin\BannerController::class, 'destroy'])->name('admin.banner.destroy');
+
+
+
+
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    // Các route khác...
+    Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
+    Route::post('/banners/upload', [BannerController::class, 'upload'])->name('banners.upload');
+    Route::delete('/banners/{id}', [BannerController::class, 'destroy'])->name('banners.destroy');
+});
+Route::delete('admin/banners/{id}', [BannerController::class, 'destroy'])->name('admin.banners.destroy');
+
+//tích hợp mô tả 
+Route::post('/jobs/save', [JobController::class, 'store'])->name('jobs.store');
+// clound libary
+// routes/web.php
+use App\Http\Controllers\JobApplicationController;
+
+Route::post('/apply', [JobApplicationController::class, 'store'])->name('apply.job');
+
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
+Route::get('/test-cloudinary', function () {
+    try {
+        $filePath = public_path('testfile.txt');
+        $upload = Cloudinary::uploadFile($filePath);
+        return 'Upload thành công: ' . $upload->getSecurePath();
+    } catch (\Exception $e) {
+        return 'Lỗi: ' . $e->getMessage();
+    }
+});

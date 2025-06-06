@@ -3,7 +3,7 @@
 @section('content')
 <h2>Danh sách ứng tuyển</h2>
 
-<table>
+<table class="table">
     <thead>
         <tr>
             <th>Họ tên</th>
@@ -21,7 +21,14 @@
             <td>{{ $app->phone }}</td>
             <td>{{ $app->created_at->format('d/m/Y') }}</td>
             <td>
-                <a href="{{ route('admin.applications.show', $app->id) }}">Xem chi tiết</a>
+                <a href="{{ route('admin.applications.show', $app->id) }}" class="btn btn-primary btn-sm">Xem chi tiết</a>
+
+                <!-- Form Xóa -->
+                <form action="{{ route('admin.applications.destroy', $app->id) }}" method="POST" style="display:inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button onclick="return confirm('Bạn chắc chắn muốn xóa?')" class="btn btn-danger btn-sm">Xóa</button>
+                </form>
             </td>
         </tr>
         @endforeach

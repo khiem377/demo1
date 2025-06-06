@@ -12,7 +12,8 @@
     <li>
         <strong>CV:</strong>
         @if($application->cv_file)
-            <a href="{{ asset('uploads/cvs/' . $application->cv_file) }}" target=\"_blank\">Xem CV</a>
+      <!-- không dùng asset() -->
+<a href="{{ $application->cv_file }}" target="_blank">Xem CV</a>
         @else
             Không có file CV
         @endif
