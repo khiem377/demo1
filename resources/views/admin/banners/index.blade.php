@@ -12,10 +12,7 @@
 
         <div class="card mb-4">
             <div class="card-body">
-                @if(session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                @endif
-
+                
                 @if($banner)
                     <img src="{{ $banner->image_path }}" alt="Banner" class="img-fluid" style="max-width:100%;">
                 @endif

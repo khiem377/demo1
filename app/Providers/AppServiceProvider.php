@@ -3,13 +3,13 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Models\Banner;
 use Illuminate\Support\Facades\View;
+use App\Models\Banner;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register any application services.
+     * Đăng ký bất kỳ dịch vụ nào.
      */
     public function register()
     {
@@ -17,14 +17,18 @@ class AppServiceProvider extends ServiceProvider
     }
 
     /**
-     * Bootstrap any application services.
+     * Bootstrap mọi dịch vụ ứng dụng.
      */
+    //lấy baner từ url clound
+    // public function boot()
+    // {
+    //     View::share('banner', Banner::latest()->first()?->image_path ?? 'https://res.cloudinary.com/your-cloud-name/image/upload/v1234567890/default-banner.jpg');
+    // }
     public function boot()
-    {
-        $banner = Banner::latest()->first(); // lấy banner mới nhất
-        View::share('banner', $banner); // chia sẻ với tất cả view
-    }
+{
+    // Lấy tất cả banner mới nhất, ví dụ limit 10
+    $banners = Banner::latest()->take(10)->get()->pluck('image_path');
+
+    View::share('banners', $banners);
 }
-
-
-
+}
