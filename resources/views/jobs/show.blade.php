@@ -140,9 +140,12 @@
 
 
 @section('content')
-    <div class="banner">
-        <img src="{{ asset($banner) }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
-    </div>
+    
+    @foreach ($banners as $banner)
+        <div class="swiper-slide">
+            <img src="{{ $banner }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
+        </div>
+    @endforeach
     <div class="container">
         <div class="left">
 

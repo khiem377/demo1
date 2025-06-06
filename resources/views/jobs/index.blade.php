@@ -1,6 +1,7 @@
 <!-- resources/views/jobs/index.blade.php -->
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8" />
     <title>Vị trí ứng tuyển</title>
@@ -10,15 +11,19 @@
             width: 90%;
             margin: 20px auto;
         }
-        th, td {
+
+        th,
+        td {
             border: 1px solid #ccc;
             padding: 8px 15px;
             text-align: left;
         }
+
         th {
             background-color: #007bff;
             color: white;
         }
+
         a.button {
             background-color: #007bff;
             color: white;
@@ -26,6 +31,7 @@
             text-decoration: none;
             border-radius: 4px;
         }
+
         a.button:hover {
             background-color: #0056b3;
         }
@@ -36,9 +42,13 @@
 @section('title', 'Trang Chủ')
 
 @section('content')
-<div class="banner">
-    <img src="{{ asset($banner) }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
-</div>
+
+    @foreach ($banners as $banner)
+        <div class="swiper-slide">
+            <img src="{{ $banner }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
+        </div>
+    @endforeach
+
     <h1 style="text-align:center;">Danh sách Vị trí ứng tuyển</h1>
 
     <table>

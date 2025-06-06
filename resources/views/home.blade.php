@@ -1,44 +1,42 @@
-@php
-    $banner = \App\Models\Banner::latest()->first()?->image_path 
-              ?? asset('images/banner.jpg');
-@endphp
 @extends('layouts.app')
 
 @section('title', 'Trang Chủ')
 
 @section('content')
-    <div class="banner">
-       <img src="{{ asset($banner) }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
-    </div>
+ <div class="swiper" style="width: 100%; height: 300px;">
+  <div class="swiper-wrapper">
+    @foreach ($banners as $banner)
+      <div class="swiper-slide">
+        <img src="{{ $banner }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
+      </div>
+    @endforeach
+  </div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-pagination"></div>
+</div>
 
-    <h1>Chào mừng đến với Trang Chủ</h1>
-    <p>Đây là nội dung chính của trang chủ.</p>
+<h1>Chào mừng đến với Trang Chủ</h1>
+<p>Đây là nội dung chính của trang chủ.</p>
+@endsection
 
-
-
-    
-    <!-- scripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-    <script>
-        // Slider using Slick
-        $(document).ready(function() {
-            $('.post-wrapper').slick({
-                slidesToScroll: 1,
-                autoplay: true,
-                arrows: true,
-                dots: true,
-                autoplaySpeed: 5000,
-                prevArrow: $('.prev'),
-                nextArrow: $('.next'),
-                appendDots: $(".dot"),
-            });
-        });
-    </script>
-
-    <!-- Firebase config -->
- 
-
-    <script src="./script/script.js"></script>
-</body>
+@section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper('.swiper', {
+    loop: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>
 @endsection
