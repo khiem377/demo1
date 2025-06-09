@@ -1,3 +1,5 @@
+ @yield('scripts')
+
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -141,11 +143,7 @@
 
 @section('content')
     
-    @foreach ($banners as $banner)
-        <div class="swiper-slide">
-            <img src="{{ $banner }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
-        </div>
-    @endforeach
+ 
     <div class="container">
         <div class="left">
 
@@ -237,4 +235,5 @@
                 document.getElementById('apply-form').style.display = 'block';
             });
         </script>
+        @yield('scripts')
 @endsection

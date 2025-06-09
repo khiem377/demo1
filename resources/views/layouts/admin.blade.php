@@ -26,7 +26,8 @@
         <div class="mb-3">
             <a href="{{ route('admin.jobs.index') }}" class="btn btn-primary me-2">Danh sách công việc</a>
             <a href="{{ route('admin.applications.index') }}" class="btn btn-success me-2">Danh sách ứng tuyển</a>
-            <a href="{{ route('admin.banners.index') }}" class="btn btn-warning">Quản lý banner</a> {{-- ✅ Nút mới thêm --}}
+            <a href="{{ route('admin.banners.index') }}" class="btn btn-warning">Quản lý banner</a> 
+             <a href="{{ route('admin.hr_contacts.index') }}" class="btn btn-dark	">Quản lý mail-Hr</a> 
         </div>
 
         <div class="card p-3">

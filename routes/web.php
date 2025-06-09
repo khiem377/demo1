@@ -20,6 +20,10 @@ Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::get('/jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('/jobs/{id}/apply', [JobController::class, 'showApplyForm'])->name('jobs.apply.form');
 Route::post('/jobs/{id}/apply', [JobController::class, 'apply'])->name('jobs.apply');
+// routes/apply.php
+
+
+
 
 // Dashboard route, cần đăng nhập và xác minh email
 Route::get('/dashboard', function () {
@@ -101,16 +105,35 @@ Route::post('/jobs/save', [JobController::class, 'store'])->name('jobs.store');
 // routes/web.php
 use App\Http\Controllers\JobApplicationController;
 
-Route::post('/apply', [JobApplicationController::class, 'store'])->name('apply.job');
+Route::post('/apply/{id}', [JobApplicationController::class, 'store'])->name('jobs.apply');
 
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
-Route::get('/test-cloudinary', function () {
-    try {
-        $filePath = public_path('testfile.txt');
-        $upload = Cloudinary::uploadFile($filePath);
-        return 'Upload thành công: ' . $upload->getSecurePath();
-    } catch (\Exception $e) {
-        return 'Lỗi: ' . $e->getMessage();
+// banner swiper
+// routes/web.php
+
+
+Route::get('/admin/banners', [BannerController::class, 'index'])->name('admin.banners.index');
+Route::post('/admin/banners/upload', [BannerController::class, 'upload'])->name('admin.banners.upload');
+Route::delete('/admin/banners/{id}', [BannerController::class, 'destroy'])->name('admin.banners.destroy');
+
+//admin hrmail
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'is_admin'])->group(function() {
+    Route::resource('hr_contacts', App\Http\Controllers\Admin\HrContactController::class);
+   
+
+});
+
+
+
+
+
+
+Route::get('/test-mail-hr', function () {
+    $hrEmails = App\Models\HRContact::pluck('email')->toArray();
+    foreach ($hrEmails as $email) {
+        Mail::raw('Test gửi mail cho HR từ Laravel!', function ($message) use ($email) {
+            $message->to($email)->subject('Test mail HR');
+        });
     }
+    return 'Mail test đã gửi cho HR trong database.';
 });

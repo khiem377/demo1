@@ -1,6 +1,7 @@
 <!-- resources/views/jobs/index.blade.php -->
 <!DOCTYPE html>
 <html lang="vi">
+@yield('scripts')
 
 <head>
     <meta charset="UTF-8" />
@@ -37,17 +38,19 @@
         }
     </style>
 </head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
+
 @extends('layouts.app')
 
 @section('title', 'Trang Chủ')
 
 @section('content')
-
-    @foreach ($banners as $banner)
+ <!-- @foreach ($banners as $banner)
         <div class="swiper-slide">
             <img src="{{ $banner }}" alt="Banner" style="width: 100%; height: 300px; object-fit: cover;">
         </div>
-    @endforeach
+    @endforeach -->
 
     <h1 style="text-align:center;">Danh sách Vị trí ứng tuyển</h1>
 
@@ -70,9 +73,7 @@
                 </tr>
             @endforeach
         </tbody>
+        @yield('scripts')
     </table>
 
-    <div class="back">
-        <a href="{{ route('home') }}" class="back-link">&larr; Quay lại danh sách</a>
-    </div>
 @endsection

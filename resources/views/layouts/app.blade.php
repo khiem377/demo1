@@ -1,4 +1,5 @@
 <!-- resources/views/layouts/app.blade.php -->
+ @yield('scripts')
 <!DOCTYPE html>
 <html lang="vi">
 
